@@ -1,8 +1,20 @@
 # interview_test
 
-A new Flutter project.
+This is Khoa's test
 
-## Getting Started
+## Logic flow
+#### Sort type drink
+![image](https://github.com/khoavd001/interview_test/assets/72806367/2b4ae8e0-96be-4d50-a368-c5ad057758bb)
+
+#### Caculate cart price
+
+![image](https://github.com/khoavd001/interview_test/assets/72806367/1194658a-7c3b-4263-b046-9880a1b7ae75)
+
+## Demo
+
+
+https://github.com/khoavd001/interview_test/assets/72806367/524030cd-4876-48df-957f-40779a980d52
+
 
 This project is a starting point for a Flutter application.
 
