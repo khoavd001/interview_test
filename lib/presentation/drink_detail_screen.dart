@@ -90,190 +90,13 @@ class _DrinkDetailState extends State<DrinkDetail> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const SizedBox(height: 8),
-                              Text(
-                                widget.name ?? '',
-                                style: const TextStyle(
-                                    fontSize: 24, fontWeight: FontWeight.w600),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                widget.descript ?? '',
-                                style: TextStyle(
-                                    color: ColorsApp.ingredientText,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 14),
-                              ),
-                              const SizedBox(height: 8),
-                              Row(
-                                children: [
-                                  Image.asset(ImagesApp.star),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    widget.rating.toString(),
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 14,
-                                        color: ColorsApp.ingredientText),
-                                  ),
-                                  const Spacer(),
-                                  Text('${convertToPrice(widget.price)}đ ',
-                                      style: TextStyle(
-                                        decoration: TextDecoration.lineThrough,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 14,
-                                        color: ColorsApp.ingredientText,
-                                      )),
-                                  Text('${convertToPrice(widget.sellPrice)}đ',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 24,
-                                          color: ColorsApp.selected))
-                                ],
-                              ),
+                              _renderInfo(),
                               const SizedBox(height: 30),
-                              SizedBox(
-                                height: screenSize.height / 3,
-                                child: SingleChildScrollView(
-                                  child: Column(
-                                    children: [
-                                      _renderTitle('Chọn size ', false),
-                                      _renderSizeOption(
-                                          selectedSize,
-                                          size,
-                                          price,
-                                          selectedOption,
-                                          selectedToping,
-                                          selectedSize),
-                                      const SizedBox(height: 16),
-                                      _renderTitle('Món ăn kèm ', true),
-                                      _renderSizeOption(
-                                          selectedToping,
-                                          topping,
-                                          price,
-                                          selectedOption,
-                                          selectedToping,
-                                          selectedSize),
-                                      const SizedBox(height: 16),
-                                      _renderTitle('Yêu cầu thành phần ', true),
-                                      _renderSizeOption(
-                                          selectedOption,
-                                          option,
-                                          price,
-                                          selectedOption,
-                                          selectedToping,
-                                          selectedSize),
-                                      const SizedBox(height: 16),
-                                      _renderTitle(
-                                          'Thêm lưu ý cho quán ', true),
-                                      const SizedBox(height: 10),
-                                      TextFormField(
-                                        maxLines: 5,
-                                        decoration: InputDecoration(
-                                          filled: true,
-                                          fillColor: ColorsApp.noteColor,
-                                          hintText: 'Ghi chú ở đây',
-                                          border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                            borderSide: BorderSide.none,
-                                          ),
-                                        ),
-                                        cursorHeight: 10,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
+                              _renderAddition(screenSize, selectedSize, price,
+                                  selectedOption, selectedToping),
                               const SizedBox(height: 10),
-                              ValueListenableBuilder<dynamic>(
-                                  valueListenable: count,
-                                  builder: (context, value, child) {
-                                    return Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        GestureDetector(
-                                            onTap: () => {
-                                                  if (value > 0)
-                                                    {
-                                                      count.value = value - 1,
-                                                      countPrice =
-                                                          widget.sellPrice *
-                                                              (count.value - 1),
-                                                      price.value =
-                                                          widget.sellPrice +
-                                                              countPrice +
-                                                              additionPrice
-                                                    }
-                                                },
-                                            child: Image.asset(
-                                                ImagesApp.minusIcon)),
-                                        const SizedBox(width: 10),
-                                        Text(
-                                          '${value >= 10 ? '' : '0'}${value.toString()}',
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 16),
-                                        ),
-                                        const SizedBox(width: 10),
-                                        GestureDetector(
-                                            onTap: () => {
-                                                  count.value = value + 1,
-                                                  countPrice =
-                                                      widget.sellPrice *
-                                                          (count.value - 1),
-                                                  price.value =
-                                                      widget.sellPrice +
-                                                          countPrice +
-                                                          additionPrice,
-                                                  print(widget.sellPrice),
-                                                  print(value),
-                                                  print(price.value),
-                                                  print(additionPrice)
-                                                },
-                                            child: Image.asset(
-                                                ImagesApp.addDrink)),
-                                      ],
-                                    );
-                                  }),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    margin: const EdgeInsets.all(12),
-                                    child: ValueListenableBuilder<dynamic>(
-                                        valueListenable: price,
-                                        builder: (context, value, child) {
-                                          return ElevatedButton(
-                                            onPressed: () {},
-                                            style: ElevatedButton.styleFrom(
-                                              primary: ColorsApp.selected,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(24.0),
-                                              ),
-                                            ),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(12.0),
-                                              child: Row(
-                                                children: [
-                                                  Image.asset(
-                                                      ImagesApp.cartIcon),
-                                                  const SizedBox(width: 10),
-                                                  Text(
-                                                    'Thêm vào đơn - ${convertToPrice(value)}đ',
-                                                    style:
-                                                        TextStyle(fontSize: 18),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          );
-                                        }),
-                                  ),
-                                ],
-                              )
+                              _renderCounter(count, price),
+                              _renderAddToCartButton(price)
                             ],
                           ),
                         ),
@@ -285,6 +108,176 @@ class _DrinkDetailState extends State<DrinkDetail> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Column _renderInfo() {
+    return Column(
+      children: [
+        Text(
+          widget.name ?? '',
+          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          widget.descript ?? '',
+          style: TextStyle(
+              color: ColorsApp.ingredientText,
+              fontWeight: FontWeight.w400,
+              fontSize: 14),
+        ),
+        const SizedBox(height: 8),
+        Row(
+          children: [
+            Image.asset(ImagesApp.star),
+            const SizedBox(width: 4),
+            Text(
+              widget.rating.toString(),
+              style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14,
+                  color: ColorsApp.ingredientText),
+            ),
+            const Spacer(),
+            Text('${convertToPrice(widget.price)}đ ',
+                style: TextStyle(
+                  decoration: TextDecoration.lineThrough,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14,
+                  color: ColorsApp.ingredientText,
+                )),
+            Text('${convertToPrice(widget.sellPrice)}đ',
+                style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 24,
+                    color: ColorsApp.selected))
+          ],
+        ),
+      ],
+    );
+  }
+
+  Row _renderAddToCartButton(ValueNotifier<double> price) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          margin: const EdgeInsets.all(12),
+          child: ValueListenableBuilder<dynamic>(
+              valueListenable: price,
+              builder: (context, value, child) {
+                return ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    primary: ColorsApp.selected,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(24.0),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Row(
+                      children: [
+                        Image.asset(ImagesApp.cartIcon),
+                        const SizedBox(width: 10),
+                        Text(
+                          'Thêm vào đơn - ${convertToPrice(value)}đ',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }),
+        ),
+      ],
+    );
+  }
+
+  ValueListenableBuilder<dynamic> _renderCounter(
+      ValueNotifier<int> count, ValueNotifier<double> price) {
+    return ValueListenableBuilder<dynamic>(
+        valueListenable: count,
+        builder: (context, value, child) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GestureDetector(
+                  onTap: () => {
+                        if (value > 0)
+                          {
+                            count.value = value - 1,
+                            countPrice = widget.sellPrice * (count.value - 1),
+                            price.value =
+                                widget.sellPrice + countPrice + additionPrice
+                          }
+                      },
+                  child: Image.asset(ImagesApp.minusIcon)),
+              const SizedBox(width: 10),
+              Text(
+                '${value >= 10 ? '' : '0'}${value.toString()}',
+                style:
+                    const TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+              ),
+              const SizedBox(width: 10),
+              GestureDetector(
+                  onTap: () => {
+                        count.value = value + 1,
+                        countPrice = widget.sellPrice * (count.value - 1),
+                        price.value =
+                            widget.sellPrice + countPrice + additionPrice,
+                        print(widget.sellPrice),
+                        print(value),
+                        print(price.value),
+                        print(additionPrice)
+                      },
+                  child: Image.asset(ImagesApp.addDrink)),
+            ],
+          );
+        });
+  }
+
+  SizedBox _renderAddition(
+      Size screenSize,
+      ValueNotifier<SizeOption> selectedSize,
+      ValueNotifier<double> price,
+      ValueNotifier<BeverageOption> selectedOption,
+      ValueNotifier<Topping> selectedToping) {
+    return SizedBox(
+      height: screenSize.height / 3,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            _renderTitle('Chọn size ', false),
+            _renderSizeOption(selectedSize, size, price, selectedOption,
+                selectedToping, selectedSize),
+            const SizedBox(height: 16),
+            _renderTitle('Món ăn kèm ', true),
+            _renderSizeOption(selectedToping, topping, price, selectedOption,
+                selectedToping, selectedSize),
+            const SizedBox(height: 16),
+            _renderTitle('Yêu cầu thành phần ', true),
+            _renderSizeOption(selectedOption, option, price, selectedOption,
+                selectedToping, selectedSize),
+            const SizedBox(height: 16),
+            _renderTitle('Thêm lưu ý cho quán ', true),
+            const SizedBox(height: 10),
+            TextFormField(
+              maxLines: 5,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: ColorsApp.noteColor,
+                hintText: 'Ghi chú ở đây',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+              cursorHeight: 10,
+            ),
+          ],
+        ),
       ),
     );
   }
