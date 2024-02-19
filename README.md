@@ -19,14 +19,5 @@ https://github.com/khoavd001/interview_test/assets/72806367/cb5fd139-979a-4261-b
 
 
 
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Lưu ý: Nếu không thể xem video được vui lòng hãy vào đường link này: 
+https://drive.google.com/drive/folders/16259HNn_HYsPDsXzUv-iEdzHYfaBk56Z 
