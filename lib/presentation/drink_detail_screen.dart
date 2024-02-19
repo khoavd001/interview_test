@@ -12,7 +12,7 @@ import 'package:interview_test/rsc/image_manager.dart';
 import 'package:interview_test/widget/cart_button.dart';
 
 class DrinkDetail extends StatefulWidget {
-  String? image;
+  int? id;
   String? name;
   String? descript;
   double price;
@@ -20,7 +20,7 @@ class DrinkDetail extends StatefulWidget {
   double? rating;
   DrinkDetail(
       {Key? key,
-      this.image,
+      this.id,
       this.descript,
       this.name,
       this.price = 0,
@@ -68,7 +68,11 @@ class _DrinkDetailState extends State<DrinkDetail> {
             child: Stack(
               children: [
                 Image.asset(
-                  ImagesApp.backgroundTraDau,
+                  widget.id == 1
+                      ? ImagesApp.backgroundTraDua
+                      : widget.id == 3
+                          ? ImagesApp.backgroundTraDau
+                          : ImagesApp.backgroundTraKiwi,
                   fit: BoxFit.fitWidth,
                   width: screenSize.width,
                 ),
@@ -93,7 +97,7 @@ class _DrinkDetailState extends State<DrinkDetail> {
                               _renderInfo(),
                               const SizedBox(height: 30),
                               _renderAddition(screenSize, selectedSize, price,
-                                  selectedOption, selectedToping),
+                                  selectedOption, selectedToping, count),
                               const SizedBox(height: 10),
                               _renderCounter(count, price),
                               _renderAddToCartButton(price)
@@ -209,8 +213,9 @@ class _DrinkDetailState extends State<DrinkDetail> {
                           {
                             count.value = value - 1,
                             countPrice = widget.sellPrice * (count.value - 1),
-                            price.value =
-                                widget.sellPrice + countPrice + additionPrice
+                            price.value = widget.sellPrice +
+                                countPrice +
+                                additionPrice * count.value
                           }
                       },
                   child: Image.asset(ImagesApp.minusIcon)),
@@ -225,8 +230,9 @@ class _DrinkDetailState extends State<DrinkDetail> {
                   onTap: () => {
                         count.value = value + 1,
                         countPrice = widget.sellPrice * (count.value - 1),
-                        price.value =
-                            widget.sellPrice + countPrice + additionPrice,
+                        price.value = widget.sellPrice +
+                            countPrice +
+                            additionPrice * count.value,
                         print(widget.sellPrice),
                         print(value),
                         print(price.value),
@@ -243,7 +249,8 @@ class _DrinkDetailState extends State<DrinkDetail> {
       ValueNotifier<SizeOption> selectedSize,
       ValueNotifier<double> price,
       ValueNotifier<BeverageOption> selectedOption,
-      ValueNotifier<Topping> selectedToping) {
+      ValueNotifier<Topping> selectedToping,
+      ValueNotifier<int> count) {
     return SizedBox(
       height: screenSize.height / 3,
       child: SingleChildScrollView(
@@ -251,15 +258,15 @@ class _DrinkDetailState extends State<DrinkDetail> {
           children: [
             _renderTitle('Chọn size ', false),
             _renderSizeOption(selectedSize, size, price, selectedOption,
-                selectedToping, selectedSize),
+                selectedToping, selectedSize, count),
             const SizedBox(height: 16),
             _renderTitle('Món ăn kèm ', true),
             _renderSizeOption(selectedToping, topping, price, selectedOption,
-                selectedToping, selectedSize),
+                selectedToping, selectedSize, count),
             const SizedBox(height: 16),
             _renderTitle('Yêu cầu thành phần ', true),
             _renderSizeOption(selectedOption, option, price, selectedOption,
-                selectedToping, selectedSize),
+                selectedToping, selectedSize, count),
             const SizedBox(height: 16),
             _renderTitle('Thêm lưu ý cho quán ', true),
             const SizedBox(height: 10),
@@ -288,7 +295,8 @@ class _DrinkDetailState extends State<DrinkDetail> {
       ValueNotifier<double> price,
       ValueNotifier<BeverageOption> option,
       ValueNotifier<Topping> topping,
-      ValueNotifier<SizeOption> size) {
+      ValueNotifier<SizeOption> size,
+      ValueNotifier<int> count) {
     return ValueListenableBuilder<dynamic>(
         valueListenable: selected,
         builder: (context, value, child) {
@@ -322,8 +330,9 @@ class _DrinkDetailState extends State<DrinkDetail> {
                             additionPrice = size.value.price +
                                 topping.value.price +
                                 option.value.price;
-                            price.value =
-                                widget.sellPrice + additionPrice + countPrice;
+                            price.value = widget.sellPrice +
+                                additionPrice * count.value +
+                                countPrice;
 
                             print(size.value.price);
                             print(price);

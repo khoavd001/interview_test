@@ -220,6 +220,7 @@ class _HomePageState extends State<HomePage> {
             context,
             MaterialPageRoute(
                 builder: (context) => DrinkDetail(
+                      id: selectProduct.value.id,
                       descript: selectProduct.value.description,
                       name: selectProduct.value.name,
                       price: selectProduct.value.price,
